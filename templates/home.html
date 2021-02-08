@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+	<title>MyGallery</title>
+</head>
+<body>
+
+	<div id="wrapper">
+
+		<div id="upload">
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="POST">
+	</form>
+		</div>
+
+		<div id="gallary">
+		{% for image in images %}
+		<div class="photo">
+			<img src="{{ image.picture.url }}">
+			<p>{{image.description}}</p>
+			<form action="/delete_image/{{ image.id }}" method="get">
+			<input type="submit" value="Remove"></form>
+		</div>
+		{% endfor %}
+		</div>
+		
+	</div>
+
+</body>
+</html>
